@@ -16,7 +16,7 @@ class ReservationController extends Controller
      */
     public function index()
     {
-        $reservations = Reservation::paginate(5);
+        $reservations = Reservation::orderBy('created_at', 'desc')->paginate(6);
 
         // return une collection de vol comme une ressource
         return ReservationResource::collection($reservations);

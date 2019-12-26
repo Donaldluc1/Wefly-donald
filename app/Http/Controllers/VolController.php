@@ -16,7 +16,7 @@ class VolController extends Controller
      */
     public function index()
     {
-        $vols = Vol::paginate(10);
+        $vols = Vol::orderBy('created_at', 'desc')->paginate(6);
 
         // return une collection de vol comme une ressource
         return VolResource::collection($vols);
