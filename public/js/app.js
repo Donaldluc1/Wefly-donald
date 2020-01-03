@@ -1990,6 +1990,70 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Vol.vue?vue&type=script&lang=js&":
+/*!**************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/Vol.vue?vue&type=script&lang=js& ***!
+  \**************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ __webpack_exports__["default"] = ({
+  data: function data() {
+    return {
+      vol: {
+        id: '',
+        dateDepart: '',
+        heureDepart: '',
+        dateArrivee: '',
+        heureArrivee: ''
+      },
+      reservations: ''
+    };
+  },
+  created: function created() {
+    this.fetchVol();
+  },
+  methods: {
+    fetchVol: function fetchVol(page_url) {
+      var _this = this;
+
+      page_url = page_url || '/api/vol/' + this.$route.params.id;
+      fetch(page_url).then(function (res) {
+        return res.json();
+      }).then(function (res) {
+        _this.vol.id = res.id, _this.vol.dateDepart = res.dateDepart, _this.vol.heureDepart = res.heureDepart, _this.vol.dateArrivee = res.dateArrivee, _this.vol.heureArrivee = res.heureArrivee, _this.reservations = res.reservations;
+      })["catch"](function (err) {
+        return console.log(err);
+      });
+    }
+  }
+});
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Vols.vue?vue&type=script&lang=js&":
 /*!***************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/Vols.vue?vue&type=script&lang=js& ***!
@@ -1999,6 +2063,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+//
 //
 //
 //
@@ -37554,23 +37619,21 @@ var render = function() {
     { staticClass: "navbar navbar-expand-sm navbar-dark bg-info mb-2" },
     [
       _c(
-        "a",
-        { staticClass: "navbar-brand", attrs: { href: "#" } },
-        [_c("router-link", { attrs: { to: "/" } }, [_vm._v("Vols")])],
-        1
+        "router-link",
+        { staticClass: "navbar-brand", attrs: { to: { name: "vols" } } },
+        [_vm._v("Vols")]
       ),
       _vm._v(" "),
       _c(
-        "a",
-        { staticClass: "navbar-brand", attrs: { href: "#" } },
-        [
-          _c("router-link", { attrs: { to: "/reservations" } }, [
-            _vm._v("Reservations")
-          ])
-        ],
-        1
+        "router-link",
+        {
+          staticClass: "navbar-brand",
+          attrs: { to: { name: "reservations" } }
+        },
+        [_vm._v("Reservations")]
       )
-    ]
+    ],
+    1
   )
 }
 var staticRenderFns = []
@@ -37826,6 +37889,85 @@ render._withStripped = true
 
 /***/ }),
 
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Vol.vue?vue&type=template&id=3b5dbf38&":
+/*!******************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/Vol.vue?vue&type=template&id=3b5dbf38& ***!
+  \******************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", [
+    _c("div", { staticClass: "text-center" }, [
+      _c("p", { staticStyle: { "font-size": "20px" } }, [
+        _vm._v("Départ le "),
+        _c("strong", [_vm._v(_vm._s(_vm.vol.dateDepart))]),
+        _vm._v(" à "),
+        _c("strong", [_vm._v(_vm._s(_vm.vol.heureDepart))])
+      ]),
+      _vm._v(" "),
+      _c("p", [
+        _vm._v("Arrivée le "),
+        _c("strong", [_vm._v(_vm._s(_vm.vol.dateArrivee))]),
+        _vm._v(" à "),
+        _c("strong", [_vm._v(_vm._s(_vm.vol.heureArrivee))])
+      ]),
+      _vm._v(" "),
+      _c("br"),
+      _vm._v(" "),
+      _c("h3", [_vm._v("Réservations sur ce vol")]),
+      _vm._v(" "),
+      _c("br"),
+      _vm._v(" "),
+      _c(
+        "div",
+        { staticClass: "row" },
+        _vm._l(_vm.reservations, function(reservation) {
+          return _c(
+            "div",
+            {
+              key: reservation.id,
+              staticClass: "card card-body mb-2 col-6 text-center"
+            },
+            [
+              _c("p", { staticStyle: { "font-size": "20px" } }, [
+                _vm._v("Date de la reservation "),
+                _c("strong", [_vm._v(_vm._s(reservation.date))]),
+                _vm._v(" à "),
+                _c("strong", [_vm._v(_vm._s(_vm.vol.heureDepart))])
+              ]),
+              _vm._v(" "),
+              _c("p", [
+                _vm._v("Numero de la reservation "),
+                _c("strong", [_vm._v(_vm._s(reservation.numero))])
+              ]),
+              _vm._v(" "),
+              _c("p", [
+                _vm._v("Numero du vol: "),
+                _c("strong", [_vm._v(" " + _vm._s(reservation.vol_id) + " ")])
+              ])
+            ]
+          )
+        }),
+        0
+      )
+    ])
+  ])
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
 /***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Vols.vue?vue&type=template&id=3405c8eb&":
 /*!*******************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/Vols.vue?vue&type=template&id=3405c8eb& ***!
@@ -37968,6 +38110,18 @@ var render = function() {
           "div",
           { key: vol.id, staticClass: "card card-body mb-2 col-6 text-center" },
           [
+            _c(
+              "router-link",
+              {
+                staticClass: "btn btn-primary",
+                attrs: {
+                  tag: "button",
+                  to: { name: "vol", params: { id: vol.id } }
+                }
+              },
+              [_vm._v("Details du vol")]
+            ),
+            _vm._v(" "),
             _c("p", { staticStyle: { "font-size": "20px" } }, [
               _vm._v("Départ le "),
               _c("strong", [_vm._v(_vm._s(vol.dateDepart))]),
@@ -38011,7 +38165,8 @@ var render = function() {
               },
               [_vm._v("Supprimer")]
             )
-          ]
+          ],
+          1
         )
       }),
       0
@@ -53354,6 +53509,75 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/components/Vol.vue":
+/*!*****************************************!*\
+  !*** ./resources/js/components/Vol.vue ***!
+  \*****************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _Vol_vue_vue_type_template_id_3b5dbf38___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Vol.vue?vue&type=template&id=3b5dbf38& */ "./resources/js/components/Vol.vue?vue&type=template&id=3b5dbf38&");
+/* harmony import */ var _Vol_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Vol.vue?vue&type=script&lang=js& */ "./resources/js/components/Vol.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _Vol_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _Vol_vue_vue_type_template_id_3b5dbf38___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _Vol_vue_vue_type_template_id_3b5dbf38___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/Vol.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/Vol.vue?vue&type=script&lang=js&":
+/*!******************************************************************!*\
+  !*** ./resources/js/components/Vol.vue?vue&type=script&lang=js& ***!
+  \******************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Vol_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib??ref--4-0!../../../node_modules/vue-loader/lib??vue-loader-options!./Vol.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Vol.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Vol_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/Vol.vue?vue&type=template&id=3b5dbf38&":
+/*!************************************************************************!*\
+  !*** ./resources/js/components/Vol.vue?vue&type=template&id=3b5dbf38& ***!
+  \************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Vol_vue_vue_type_template_id_3b5dbf38___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib??vue-loader-options!./Vol.vue?vue&type=template&id=3b5dbf38& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Vol.vue?vue&type=template&id=3b5dbf38&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Vol_vue_vue_type_template_id_3b5dbf38___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Vol_vue_vue_type_template_id_3b5dbf38___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
 /***/ "./resources/js/components/Vols.vue":
 /*!******************************************!*\
   !*** ./resources/js/components/Vols.vue ***!
@@ -53437,6 +53661,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue_router__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vue-router */ "./node_modules/vue-router/dist/vue-router.esm.js");
 /* harmony import */ var _components_Vols__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./components/Vols */ "./resources/js/components/Vols.vue");
 /* harmony import */ var _components_Reservation__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./components/Reservation */ "./resources/js/components/Reservation.vue");
+/* harmony import */ var _components_Vol__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./components/Vol */ "./resources/js/components/Vol.vue");
+
 
 
 
@@ -53445,10 +53671,16 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vue_router__WEBPACK_IMPORTED_MODU
 /* harmony default export */ __webpack_exports__["default"] = (new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
   routes: [{
     path: '/',
-    component: _components_Vols__WEBPACK_IMPORTED_MODULE_2__["default"]
+    component: _components_Vols__WEBPACK_IMPORTED_MODULE_2__["default"],
+    name: 'vols'
   }, {
     path: '/reservations',
-    component: _components_Reservation__WEBPACK_IMPORTED_MODULE_3__["default"]
+    component: _components_Reservation__WEBPACK_IMPORTED_MODULE_3__["default"],
+    name: 'reservations'
+  }, {
+    path: '/vol/:id(\\d+)',
+    component: _components_Vol__WEBPACK_IMPORTED_MODULE_4__["default"],
+    name: 'vol'
   }],
   mode: 'history'
 }));

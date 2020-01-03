@@ -18,3 +18,7 @@ Route::get('/', function () {
 Route::get('/reservations', function () {
     return view('welcome');
 });
+
+Route::get('/vol/{id}', function () {
+    return view('welcome');
+});

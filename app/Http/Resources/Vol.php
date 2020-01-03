@@ -20,7 +20,8 @@ class Vol extends JsonResource
             'dateDepart' => $this->dateDepart,
             'heureDepart' => $this->heureDepart,
             'dateArrivee' => $this->dateArrivee,
-            'heureArrivee' => $this->heureArrivee
+            'heureArrivee' => $this->heureArrivee,
+            'reservations' => Reservation::collection($this->reservations)
         ];
     }
 }

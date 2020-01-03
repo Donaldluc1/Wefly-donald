@@ -18,6 +18,7 @@
         </form>
         <div class="row">
             <div class="card card-body mb-2 col-6 text-center" v-for="vol in vols" v-bind:key="vol.id">
+                <router-link class="btn btn-primary" tag="button" :to="{name: 'vol', params: {id:vol.id}}">Details du vol</router-link>
                 <p style="font-size:20px">Départ le <strong>{{ vol.dateDepart }}</strong> à <strong>{{ vol.heureDepart }}</strong> </p>
                 <p>Arrivée le <strong>{{ vol.dateArrivee }}</strong> à <strong>{{ vol.heureArrivee }}</strong> </p>
                 <hr>
