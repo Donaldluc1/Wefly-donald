@@ -1,18 +1,43 @@
 <template>
     <div>
         <h2>Reservations</h2>
-        <form @submit.prevent="addReservation" class="mb-4">
-            <div class="form-group">
-                <input type="text" class="form-control" placeholder="Entrer la date" v-model="reservation.date">
+        <div class="row">
+            <form @submit.prevent="addReservation" class="col-6">
+                <div class="form-group">
+                    <label>Date de reservation</label>
+                    <input type="date" class="form-control" placeholder="Entrer la date" v-model="reservation.date">
+                </div>
+                <div class="form-group">
+                    <label>Numero de reservation</label>
+                    <input type="text" class="form-control" readonly v-model="reservation.numero">
+                </div>
+                <div class="form-group">
+                    <label>Numero du Vol</label>
+                    <input type="text" class="form-control" readonly placeholder="Veuillez choisir un vol à droit" v-model="reservation.vol_id">
+                </div>
+                <button type="submit" class="btn btn-light btn-block">Enregistrer</button>
+            </form>
+            <div class="card card-body col-6 text-center" > 
+                <div class="row">
+                    <div class="col-6" v-for="vol in vols" v-bind:key="vol.id">
+                        <button @click="chooseVol(vol.id)" class="mb-2 btn btn-primary">Départ le: {{ vol.dateDepart }} <br>  A {{ vol.heureDepart }} </button>
+                    </div>
+                </div>
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination">
+                        <li v-bind:class="[{disabled: !pagination.prev_page_url}]" class="page-item">
+                            <a href="#" class="page-link" @click="fetchVols(pagination.prev_page_url)">Previous</a>
+                        </li>
+                        <li class="page-item disabled">
+                            <a href="#" class="page-link text-dark"> Page {{ pagination.current_page }} of {{ pagination.last_page }} </a>
+                        </li>
+                        <li v-bind:class="[{disabled: !pagination.next_page_url}]" class="page-item">
+                            <a href="#" class="page-link" @click="fetchVols(pagination.next_page_url)">Next</a>
+                        </li>
+                    </ul>
+                </nav>
             </div>
-            <div class="form-group">
-                <input type="text" class="form-control" placeholder="Entrer le numéro" v-model="reservation.numero">
-            </div>
-            <div class="form-group">
-                <input type="text" class="form-control" placeholder="Entrer un chiffre entre 0 et 30" v-model="reservation.vol_id">
-            </div>
-            <button type="submit" class="btn btn-light btn-block">Enregistrer</button>
-        </form>
+        </div>
          <div class="row">
              <div class="card card-body col-6 text-center mb-2" v-for="reservation in reservations" v-bind:key="reservation.id">
                 <p> Réservé le <strong>{{ reservation.date }}</strong> </p>
@@ -44,10 +69,11 @@
         data(){
             return{
                 reservations: [],
+                vols: [],
                 reservation: {
                     id: '',
                     date: '',
-                    numero: '',
+                    numero: new Date().getFullYear() + '-' + new Date().getMonth() + '-' + new Date().getDate() + '-' + new Date().getDay() + '-' + new Date().getHours() + '-' + new Date().getMinutes() + '-' + new Date().getSeconds(),
                     vol_id: '',
                 }, 
                 reservation_id: '',
@@ -57,10 +83,31 @@
         },
 
         created(){
-            this.fetchReservations()
+            this.fetchReservations(),
+            this.fetchVols()
         },
 
         methods: {
+            fetchVols(page_url){
+                let vm = this
+                page_url = page_url || '/api/vols'
+                fetch(page_url)
+                    .then(res => res.json())
+                    .then(res => {
+                        this.vols = res.data
+                        vm.makePagination(res.meta, res.links)
+                    })
+                    .catch(err => console.log(err))
+            },
+            makePagination(meta, links){
+                let pagination = {
+                    current_page: meta.current_page,
+                    last_page: meta.last_page,
+                    next_page_url: links.next,
+                    prev_page_url: links.prev
+                }
+                this.pagination = pagination
+            },
             fetchReservations(page_url){
                 let vm = this
                 page_url = page_url || '/api/reservations'
@@ -143,6 +190,9 @@
                 this.reservation.date = reservation.date
                 this.reservation.numero = reservation.numero
                 this.reservation.vol_id = reservation.vol_id
+            },
+            chooseVol(id){
+                this.reservation.vol_id = id
             }
         }
     }

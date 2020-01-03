@@ -21,6 +21,7 @@
                 <router-link class="btn btn-primary" tag="button" :to="{name: 'vol', params: {id:vol.id}}">Details du vol</router-link>
                 <p style="font-size:20px">Départ le <strong>{{ vol.dateDepart }}</strong> à <strong>{{ vol.heureDepart }}</strong> </p>
                 <p>Arrivée le <strong>{{ vol.dateArrivee }}</strong> à <strong>{{ vol.heureArrivee }}</strong> </p>
+                <p>Nombre de réservations:  <strong>{{ vol.reservations.length }}</strong> </p>
                 <hr>
                 <button @click="editVol(vol)" class="btn btn-warning facebook-style-btn facebook-style-dark mb-2">Modifier</button>
                 <button @click="deleteVol(vol.id)" class="btn btn-danger facebook-style-btn facebook-style-light">Supprimer</button>
@@ -52,7 +53,8 @@ export default {
                 dateDepart: '',
                 heureDepart: '',
                 dateArrivee: '',
-                heureArrivee: ''
+                heureArrivee: '',
+                reservations: ''
             }, 
             vol_id: '',
             pagination: {},

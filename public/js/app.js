@@ -1838,6 +1838,35 @@ module.exports = {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+var _methods;
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -1883,10 +1912,11 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return {
       reservations: [],
+      vols: [],
       reservation: {
         id: '',
         date: '',
-        numero: '',
+        numero: new Date().getFullYear() + '-' + new Date().getMonth() + '-' + new Date().getDate() + '-' + new Date().getDay() + '-' + new Date().getHours() + '-' + new Date().getMinutes() + '-' + new Date().getSeconds(),
         vol_id: ''
       },
       reservation_id: '',
@@ -1895,18 +1925,18 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   created: function created() {
-    this.fetchReservations();
+    this.fetchReservations(), this.fetchVols();
   },
-  methods: {
-    fetchReservations: function fetchReservations(page_url) {
+  methods: (_methods = {
+    fetchVols: function fetchVols(page_url) {
       var _this = this;
 
       var vm = this;
-      page_url = page_url || '/api/reservations';
+      page_url = page_url || '/api/vols';
       fetch(page_url).then(function (res) {
         return res.json();
       }).then(function (res) {
-        _this.reservations = res.data;
+        _this.vols = res.data;
         vm.makePagination(res.meta, res.links);
       })["catch"](function (err) {
         return console.log(err);
@@ -1921,71 +1951,92 @@ __webpack_require__.r(__webpack_exports__);
       };
       this.pagination = pagination;
     },
-    deleteReservation: function deleteReservation(id) {
+    fetchReservations: function fetchReservations(page_url) {
       var _this2 = this;
 
-      if (confirm('Etes vous sur ?')) {
-        fetch("api/reservation/".concat(id), {
-          method: 'delete'
-        }).then(function (res) {
-          return res.json();
-        }).then(function (data) {
-          alert('reservation Supprimé');
-
-          _this2.fetchReservations();
-        })["catch"](function (err) {
-          return console.log(err);
-        });
-      }
-    },
-    addReservation: function addReservation() {
-      var _this3 = this;
-
-      if (this.edit === false) {
-        //ajouter
-        fetch('api/reservation', {
-          method: 'post',
-          body: JSON.stringify(this.reservation),
-          headers: {
-            'content-type': 'application/json'
-          }
-        }).then(function (res) {
-          return res.json();
-        }).then(function (data) {
-          _this3.reservation.date = '', _this3.reservation.numero = '', _this3.reservation.vol_id = '', alert('Ajouter ajouté');
-
-          _this3.fetchReservations();
-        })["catch"](function (err) {
-          return console.log(err);
-        });
-      } else {
-        //update
-        fetch('api/reservation', {
-          method: 'put',
-          body: JSON.stringify(this.reservation),
-          headers: {
-            'content-type': 'application/json'
-          }
-        }).then(function (res) {
-          return res.json();
-        }).then(function (data) {
-          _this3.reservation.date = '', _this3.reservation.numero = '', _this3.reservation.vol_id = '', alert('Reservation Modifier');
-
-          _this3.fetchReservations();
-        })["catch"](function (err) {
-          return console.log(err);
-        });
-      }
-    },
-    editReservation: function editReservation(reservation) {
-      this.edit = true;
-      this.reservation.id = reservation.id;
-      this.reservation.reservation_id = reservation.id;
-      this.reservation.date = reservation.date;
-      this.reservation.numero = reservation.numero;
-      this.reservation.vol_id = reservation.vol_id;
+      var vm = this;
+      page_url = page_url || '/api/reservations';
+      fetch(page_url).then(function (res) {
+        return res.json();
+      }).then(function (res) {
+        _this2.reservations = res.data;
+        vm.makePagination(res.meta, res.links);
+      })["catch"](function (err) {
+        return console.log(err);
+      });
     }
-  }
+  }, _defineProperty(_methods, "makePagination", function makePagination(meta, links) {
+    var pagination = {
+      current_page: meta.current_page,
+      last_page: meta.last_page,
+      next_page_url: links.next,
+      prev_page_url: links.prev
+    };
+    this.pagination = pagination;
+  }), _defineProperty(_methods, "deleteReservation", function deleteReservation(id) {
+    var _this3 = this;
+
+    if (confirm('Etes vous sur ?')) {
+      fetch("api/reservation/".concat(id), {
+        method: 'delete'
+      }).then(function (res) {
+        return res.json();
+      }).then(function (data) {
+        alert('reservation Supprimé');
+
+        _this3.fetchReservations();
+      })["catch"](function (err) {
+        return console.log(err);
+      });
+    }
+  }), _defineProperty(_methods, "addReservation", function addReservation() {
+    var _this4 = this;
+
+    if (this.edit === false) {
+      //ajouter
+      fetch('api/reservation', {
+        method: 'post',
+        body: JSON.stringify(this.reservation),
+        headers: {
+          'content-type': 'application/json'
+        }
+      }).then(function (res) {
+        return res.json();
+      }).then(function (data) {
+        _this4.reservation.date = '', _this4.reservation.numero = '', _this4.reservation.vol_id = '', alert('Ajouter ajouté');
+
+        _this4.fetchReservations();
+      })["catch"](function (err) {
+        return console.log(err);
+      });
+    } else {
+      //update
+      fetch('api/reservation', {
+        method: 'put',
+        body: JSON.stringify(this.reservation),
+        headers: {
+          'content-type': 'application/json'
+        }
+      }).then(function (res) {
+        return res.json();
+      }).then(function (data) {
+        _this4.reservation.date = '', _this4.reservation.numero = '', _this4.reservation.vol_id = '', alert('Reservation Modifier');
+
+        _this4.fetchReservations();
+      })["catch"](function (err) {
+        return console.log(err);
+      });
+    }
+  }), _defineProperty(_methods, "editReservation", function editReservation(reservation) {
+    this.edit = true;
+    this.reservation.id = reservation.id;
+    this.reservation.reservation_id = reservation.id;
+    this.reservation.date = reservation.date;
+    this.reservation.numero = reservation.numero;
+    this.reservation.vol_id = reservation.vol_id;
+  }), _defineProperty(_methods, "chooseVol", function chooseVol(id) {
+    this.reservation.vol_id = id;
+  }), _methods)
 });
 
 /***/ }),
@@ -2107,6 +2158,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -2116,7 +2168,8 @@ __webpack_require__.r(__webpack_exports__);
         dateDepart: '',
         heureDepart: '',
         dateArrivee: '',
-        heureArrivee: ''
+        heureArrivee: '',
+        reservations: ''
       },
       vol_id: '',
       pagination: {},
@@ -37661,100 +37714,206 @@ var render = function() {
   return _c("div", [
     _c("h2", [_vm._v("Reservations")]),
     _vm._v(" "),
-    _c(
-      "form",
-      {
-        staticClass: "mb-4",
-        on: {
-          submit: function($event) {
-            $event.preventDefault()
-            return _vm.addReservation($event)
+    _c("div", { staticClass: "row" }, [
+      _c(
+        "form",
+        {
+          staticClass: "col-6",
+          on: {
+            submit: function($event) {
+              $event.preventDefault()
+              return _vm.addReservation($event)
+            }
           }
-        }
-      },
-      [
-        _c("div", { staticClass: "form-group" }, [
-          _c("input", {
-            directives: [
-              {
-                name: "model",
-                rawName: "v-model",
-                value: _vm.reservation.date,
-                expression: "reservation.date"
-              }
-            ],
-            staticClass: "form-control",
-            attrs: { type: "text", placeholder: "Entrer la date" },
-            domProps: { value: _vm.reservation.date },
-            on: {
-              input: function($event) {
-                if ($event.target.composing) {
-                  return
+        },
+        [
+          _c("div", { staticClass: "form-group" }, [
+            _c("label", [_vm._v("Date de reservation")]),
+            _vm._v(" "),
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.reservation.date,
+                  expression: "reservation.date"
                 }
-                _vm.$set(_vm.reservation, "date", $event.target.value)
-              }
-            }
-          })
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "form-group" }, [
-          _c("input", {
-            directives: [
-              {
-                name: "model",
-                rawName: "v-model",
-                value: _vm.reservation.numero,
-                expression: "reservation.numero"
-              }
-            ],
-            staticClass: "form-control",
-            attrs: { type: "text", placeholder: "Entrer le numéro" },
-            domProps: { value: _vm.reservation.numero },
-            on: {
-              input: function($event) {
-                if ($event.target.composing) {
-                  return
+              ],
+              staticClass: "form-control",
+              attrs: { type: "date", placeholder: "Entrer la date" },
+              domProps: { value: _vm.reservation.date },
+              on: {
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.$set(_vm.reservation, "date", $event.target.value)
                 }
-                _vm.$set(_vm.reservation, "numero", $event.target.value)
               }
-            }
-          })
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "form-group" }, [
-          _c("input", {
-            directives: [
-              {
-                name: "model",
-                rawName: "v-model",
-                value: _vm.reservation.vol_id,
-                expression: "reservation.vol_id"
+            })
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "form-group" }, [
+            _c("label", [_vm._v("Numero de reservation")]),
+            _vm._v(" "),
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.reservation.numero,
+                  expression: "reservation.numero"
+                }
+              ],
+              staticClass: "form-control",
+              attrs: { type: "text", readonly: "" },
+              domProps: { value: _vm.reservation.numero },
+              on: {
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.$set(_vm.reservation, "numero", $event.target.value)
+                }
               }
-            ],
-            staticClass: "form-control",
-            attrs: {
-              type: "text",
-              placeholder: "Entrer un chiffre entre 0 et 30"
+            })
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "form-group" }, [
+            _c("label", [_vm._v("Numero du Vol")]),
+            _vm._v(" "),
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.reservation.vol_id,
+                  expression: "reservation.vol_id"
+                }
+              ],
+              staticClass: "form-control",
+              attrs: {
+                type: "text",
+                readonly: "",
+                placeholder: "Veuillez choisir un vol à droit"
+              },
+              domProps: { value: _vm.reservation.vol_id },
+              on: {
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.$set(_vm.reservation, "vol_id", $event.target.value)
+                }
+              }
+            })
+          ]),
+          _vm._v(" "),
+          _c(
+            "button",
+            {
+              staticClass: "btn btn-light btn-block",
+              attrs: { type: "submit" }
             },
-            domProps: { value: _vm.reservation.vol_id },
-            on: {
-              input: function($event) {
-                if ($event.target.composing) {
-                  return
-                }
-                _vm.$set(_vm.reservation, "vol_id", $event.target.value)
-              }
-            }
-          })
-        ]),
-        _vm._v(" "),
+            [_vm._v("Enregistrer")]
+          )
+        ]
+      ),
+      _vm._v(" "),
+      _c("div", { staticClass: "card card-body col-6 text-center" }, [
         _c(
-          "button",
-          { staticClass: "btn btn-light btn-block", attrs: { type: "submit" } },
-          [_vm._v("Enregistrer")]
-        )
-      ]
-    ),
+          "div",
+          { staticClass: "row" },
+          _vm._l(_vm.vols, function(vol) {
+            return _c("div", { key: vol.id, staticClass: "col-6" }, [
+              _c(
+                "button",
+                {
+                  staticClass: "mb-2 btn btn-primary",
+                  on: {
+                    click: function($event) {
+                      return _vm.chooseVol(vol.id)
+                    }
+                  }
+                },
+                [
+                  _vm._v("Départ le: " + _vm._s(vol.dateDepart) + " "),
+                  _c("br"),
+                  _vm._v("  A " + _vm._s(vol.heureDepart) + " ")
+                ]
+              )
+            ])
+          }),
+          0
+        ),
+        _vm._v(" "),
+        _c("nav", { attrs: { "aria-label": "Page navigation example" } }, [
+          _c("ul", { staticClass: "pagination" }, [
+            _c(
+              "li",
+              {
+                staticClass: "page-item",
+                class: [{ disabled: !_vm.pagination.prev_page_url }]
+              },
+              [
+                _c(
+                  "a",
+                  {
+                    staticClass: "page-link",
+                    attrs: { href: "#" },
+                    on: {
+                      click: function($event) {
+                        return _vm.fetchVols(_vm.pagination.prev_page_url)
+                      }
+                    }
+                  },
+                  [_vm._v("Previous")]
+                )
+              ]
+            ),
+            _vm._v(" "),
+            _c("li", { staticClass: "page-item disabled" }, [
+              _c(
+                "a",
+                { staticClass: "page-link text-dark", attrs: { href: "#" } },
+                [
+                  _vm._v(
+                    " Page " +
+                      _vm._s(_vm.pagination.current_page) +
+                      " of " +
+                      _vm._s(_vm.pagination.last_page) +
+                      " "
+                  )
+                ]
+              )
+            ]),
+            _vm._v(" "),
+            _c(
+              "li",
+              {
+                staticClass: "page-item",
+                class: [{ disabled: !_vm.pagination.next_page_url }]
+              },
+              [
+                _c(
+                  "a",
+                  {
+                    staticClass: "page-link",
+                    attrs: { href: "#" },
+                    on: {
+                      click: function($event) {
+                        return _vm.fetchVols(_vm.pagination.next_page_url)
+                      }
+                    }
+                  },
+                  [_vm._v("Next")]
+                )
+              ]
+            )
+          ])
+        ])
+      ])
+    ]),
     _vm._v(" "),
     _c(
       "div",
@@ -38134,6 +38293,11 @@ var render = function() {
               _c("strong", [_vm._v(_vm._s(vol.dateArrivee))]),
               _vm._v(" à "),
               _c("strong", [_vm._v(_vm._s(vol.heureArrivee))])
+            ]),
+            _vm._v(" "),
+            _c("p", [
+              _vm._v("Nombre de réservations:  "),
+              _c("strong", [_vm._v(_vm._s(vol.reservations.length))])
             ]),
             _vm._v(" "),
             _c("hr"),
